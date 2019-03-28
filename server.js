@@ -12,6 +12,19 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Define API routes here
+app.use(routes);
+
+//if deployed, use the deployed database, otherwise use local climbingHeadlines database
+const db = process.env.MONGODB_URI || "mongodb://localhost/userAccounts";
+
+//connect mongoose to database
+mongoose.connect(db, error => {
+  if (error) {
+    console.log("Error: " + error);
+  } else {
+    console.log("Mongoose connection successful");
+  }
+});
 
 // Send every other request to the React app
 // Define any API routes before this runs
